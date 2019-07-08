@@ -101,16 +101,16 @@ describe Plucky::CriteriaHash do
     end
 
     it "correctly merges two bson object ids" do
-      id1 = BSON::ObjectId.new
-      id2 = BSON::ObjectId.new
+      id1 = BSONV1::ObjectId.new
+      id2 = BSONV1::ObjectId.new
       c1 = described_class.new(:foo => id1)
       c2 = described_class.new(:foo => id2)
       c1.merge(c2).source.should eq(:foo => {:$in => [id1, id2]})
     end
 
     it "correctly merges array and an object id" do
-      id1 = BSON::ObjectId.new
-      id2 = BSON::ObjectId.new
+      id1 = BSONV1::ObjectId.new
+      id2 = BSONV1::ObjectId.new
       c1 = described_class.new(:foo => [id1])
       c2 = described_class.new(:foo => id2)
       c1.merge(c2).source.should eq(:foo => {:$in => [id1, id2]})

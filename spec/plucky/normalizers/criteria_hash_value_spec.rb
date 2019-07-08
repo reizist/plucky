@@ -15,7 +15,7 @@ describe Plucky::Normalizers::CriteriaHashValue do
     context "that is actually an object id" do
       it "converts string values to object ids for object id keys" do
         criteria_hash.object_ids = [:_id]
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         subject.call(:_id, :_id, id.to_s).should eq(id)
       end
     end
@@ -115,7 +115,7 @@ describe Plucky::Normalizers::CriteriaHashValue do
   end
 
   context "with string object ids for string keys" do
-    let(:object_id) { BSON::ObjectId.new }
+    let(:object_id) { BSONV1::ObjectId.new }
 
     it "leaves string ids as strings" do
       subject.call(:_id, :_id, object_id.to_s).should eq(object_id.to_s)
@@ -124,7 +124,7 @@ describe Plucky::Normalizers::CriteriaHashValue do
   end
 
   context "with string object ids for object id keys" do
-    let(:object_id) { BSON::ObjectId.new }
+    let(:object_id) { BSONV1::ObjectId.new }
 
     before do
       criteria_hash.object_ids = [:_id, :room_id]
@@ -136,8 +136,8 @@ describe Plucky::Normalizers::CriteriaHashValue do
     end
 
     context "nested with modifier" do
-      let(:oid1) { BSON::ObjectId.new }
-      let(:oid2) { BSON::ObjectId.new }
+      let(:oid1) { BSONV1::ObjectId.new }
+      let(:oid2) { BSONV1::ObjectId.new }
       let(:oids) { [oid1.to_s, oid2.to_s] }
 
       it "converts strings to object ids" do
@@ -173,7 +173,7 @@ describe Plucky::Normalizers::CriteriaHashValue do
 
         it "honors criteria hash options" do
           nested     = [{:post_id  => '4f5ead6378fca23a13000001'}]
-          translated = [{:post_id  => BSON::ObjectId.from_string('4f5ead6378fca23a13000001')}]
+          translated = [{:post_id  => BSONV1::ObjectId.from_string('4f5ead6378fca23a13000001')}]
           given      = {operator.to_s => [nested]}
 
           criteria_hash.object_ids = [:post_id]

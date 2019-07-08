@@ -3,7 +3,7 @@ require 'helper'
 describe Plucky do
   describe ".to_object_id" do
     before do
-      @id = BSON::ObjectId.new
+      @id = BSONV1::ObjectId.new
     end
 
     it "converts nil to nil" do

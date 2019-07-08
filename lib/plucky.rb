@@ -1,6 +1,6 @@
 # encoding: UTF-8
 require 'set'
-require 'mongo'
+require 'mongov1'
 require 'plucky/extensions'
 require 'plucky/criteria_hash'
 require 'plucky/options_hash'
@@ -17,13 +17,13 @@ module Plucky
   #
   # value - The value to attempt converation of
   #
-  # Returns BSON::ObjectId or value
+  # Returns BSONV1::ObjectId or value
   def self.to_object_id(value)
-    return value if value.is_a?(BSON::ObjectId)
+    return value if value.is_a?(BSONV1::ObjectId)
     return nil   if value.nil? || (value.respond_to?(:empty?) && value.empty?)
 
-    if BSON::ObjectId.legal?(value.to_s)
-      BSON::ObjectId.from_string(value.to_s)
+    if BSONV1::ObjectId.legal?(value.to_s)
+      BSONV1::ObjectId.from_string(value.to_s)
     else
       value
     end

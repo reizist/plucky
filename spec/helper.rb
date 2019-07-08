@@ -18,7 +18,7 @@ Log = Logger.new(File.join(log_dir, 'test.log'))
 LogBuddy.init :logger => Log
 
 port = ENV.fetch "BOXEN_MONGODB_PORT", 27017
-connection = Mongo::MongoClient.new('127.0.0.1', port.to_i, :logger => Log)
+connection = MongoV1::MongoClient.new('127.0.0.1', port.to_i, :logger => Log)
 DB = connection.db('test')
 
 RSpec.configure do |config|

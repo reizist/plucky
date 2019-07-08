@@ -169,12 +169,12 @@ module Plucky
       array(value).concat(array(other_value)).uniq
     end
 
-    # Private: Array(BSON::ObjectId) returns the byte array or what not instead
+    # Private: Array(BSONV1::ObjectId) returns the byte array or what not instead
     # of the object id. This makes sure it is an array of object ids, not the
     # guts of the object id.
     def array(value)
       case value
-      when nil, BSON::ObjectId
+      when nil, BSONV1::ObjectId
         [value]
       else
         Array(value)

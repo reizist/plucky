@@ -2,9 +2,9 @@ require 'helper'
 
 describe Plucky::Query do
   before do
-    @chris      = BSON::OrderedHash['_id', 'chris', 'age', 26, 'name', 'Chris']
-    @steve      = BSON::OrderedHash['_id', 'steve', 'age', 29, 'name', 'Steve']
-    @john       = BSON::OrderedHash['_id', 'john',  'age', 28, 'name', 'John']
+    @chris      = BSONV1::OrderedHash['_id', 'chris', 'age', 26, 'name', 'Chris']
+    @steve      = BSONV1::OrderedHash['_id', 'steve', 'age', 29, 'name', 'Steve']
+    @john       = BSONV1::OrderedHash['_id', 'john',  'age', 28, 'name', 'John']
     @collection = DB['users']
     @collection.insert(@chris)
     @collection.insert(@steve)
@@ -57,7 +57,7 @@ describe Plucky::Query do
   context "#find_each" do
     it "returns a cursor" do
       cursor = described_class.new(@collection).find_each
-      cursor.should be_instance_of(Mongo::Cursor)
+      cursor.should be_instance_of(MongoV1::Cursor)
     end
 
     it "works with and normalize criteria" do
@@ -78,8 +78,8 @@ describe Plucky::Query do
 
     it "is Ruby-like and returns a reset cursor if a block is given" do
       cursor = described_class.new(@collection).find_each {}
-      cursor.should be_instance_of(Mongo::Cursor)
-      cursor.next.should be_instance_of(BSON::OrderedHash)
+      cursor.should be_instance_of(MongoV1::Cursor)
+      cursor.next.should be_instance_of(BSONV1::OrderedHash)
     end
   end
 
@@ -290,7 +290,7 @@ describe Plucky::Query do
   context "#distinct" do
     before do
       # same age as John
-      @mark = BSON::OrderedHash['_id', 'mark', 'age', 28, 'name', 'Mark']
+      @mark = BSONV1::OrderedHash['_id', 'mark', 'age', 28, 'name', 'Mark']
       @collection.insert(@mark)
     end
 
@@ -672,7 +672,7 @@ describe Plucky::Query do
     it "returns a working enumerator" do
       query = described_class.new(@collection)
       query.each.methods.map(&:to_sym).include?(:group_by).should be(true)
-      query.each.next.should be_instance_of(BSON::OrderedHash)
+      query.each.next.should be_instance_of(BSONV1::OrderedHash)
     end
   end
 

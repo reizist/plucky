@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 gemspec
 
-gem 'bson_ext', '~> 1.5', :platform => :mri
+gem 'mongov1',     '~> 1.9', git: 'https://github.com/dressipi/mongo-ruby-driver.git', branch: 'rename-legacy-mongo'
+gem 'bsonv1_ext', '~> 1.5', :platform => :mri, git: 'https://github.com/dressipi/mongo-ruby-driver.git', branch: 'rename-legacy-mongo'
 gem 'rake'
 
 group(:test) do
