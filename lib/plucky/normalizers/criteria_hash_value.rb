@@ -29,6 +29,7 @@ module Plucky
             if nesting_operator?(key)
               value.map  { |v| criteria_hash_class.new(v, options).to_hash }
             elsif parent_key == key && !modifier?(key) && !value.empty?
+              warn "relying on plucky to convert array query to use $in #{caller_locations(2)}"
               # we're not nested and not the value for a symbol operator
               {:$in => value.to_a}
             else
