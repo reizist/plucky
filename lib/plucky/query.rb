@@ -93,7 +93,7 @@ module Plucky
         if single_id_find
           first(:_id => ids[0])
         else
-          all(:_id => ids.flatten)
+          all(:_id => {'$in' => ids.flatten})
         end
       end
 
