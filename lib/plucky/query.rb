@@ -160,6 +160,7 @@ module Plucky
       end
 
       def where(hash={})
+        binding.pry
         clone.tap { |query| query.criteria.merge!(CriteriaHash.new(hash)) }
       end
 
